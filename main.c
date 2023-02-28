@@ -1,65 +1,65 @@
 #include<stdio.h>
 
-void abrirSala(int[][16]);
-void exibirSala(int[][16]);
-int ocuparPoltrona(char, int, int[][16]);
-int desocuparPoltrona(char, int, int[][16]);
+void openRoom(int[][16]);
+void showRoom(int[][16]);
+int occupySeat(char, int, int[][16]);
+int vacateSeat(char, int, int[][16]);
 
 int main() {
-    // Sala de cinema
-    int sala[8][16];
-    int disponivel = 128;
+    // Room
+    int room[8][16];
+    int availableSeats = 128;
 
-    // Opções
-    int opcao;
-    char fileira;
-    int poltrona;
+    // Options
+    int option;
+    char row;
+    int seat;
 
-    abrirSala(sala);
+    openRoom(room);
 
     while(1) {
-        printf("Poltronas disponíveis: %i\n\n", disponivel);
-        printf("1 - Exibir sala\n");
-        printf("2 - Ocupar poltrona\n");
-        printf("3 - Desocupar poltrona\n");
-        printf("4 - Reabrir sala\n");
-        printf("5 - Encerrar o sistema\n\n");
-        printf("Digite a opção: ");
-        scanf("%i", &opcao);
+        printf("Available seats: %i\n\n", availableSeats);
+        printf("1 - Show room\n");
+        printf("2 - Occupy seat\n");
+        printf("3 - Vacate seat\n");
+        printf("4 - Reopen room\n");
+        printf("5 - Quit system\n\n");
+        printf("Type an option: ");
+        scanf("%i", &option);
 
-        if(opcao == 1) {
-            exibirSala(sala);
-        } else if(opcao == 2) {
-            exibirSala(sala);
+        if(option == 1) {
+            showRoom(room);
+        } else if(option == 2) {
+            showRoom(room);
 
-            printf("Digite a fileira: ");
-            scanf(" %c", &fileira);
-            printf("Digite a poltrona: ");
-            scanf("%i", &poltrona);
+            printf("Tyoe the row: ");
+            scanf(" %c", &row);
+            printf("Type the seat: ");
+            scanf("%i", &seat);
 
-            if(ocuparPoltrona(fileira, poltrona, sala) == 0) {
-                printf("Poltrona ocupada com sucesso!\n");
-                disponivel--;
+            if(occupySeat(row, seat, room) == 0) {
+                printf("Seat occupied successfully!\n");
+                availableSeats--;
             } else {
-                printf("Não foi possível ocupar a poltrona, pois esta já se encontra ocupada.\n");
+                printf("It was not possible to occupy the seat, as it is already occupied.\n");
             }
-        } else if(opcao == 3) {
-            exibirSala(sala);
+        } else if(option == 3) {
+            showRoom(room);
 
-            printf("Digite a fileira: ");
-            scanf(" %c", &fileira);
-            printf("Digite a poltrona: ");
-            scanf("%i", &poltrona);
+            printf("Type the row: ");
+            scanf(" %c", &row);
+            printf("Type the seat: ");
+            scanf("%i", &seat);
 
-            if(desocuparPoltrona(fileira, poltrona, sala) == 0) {
-                printf("Poltrona desocupada com sucesso!\n");
-                disponivel++;
+            if(vacateSeat(row, seat, room) == 0) {
+                printf("Seat vacated succesfully!\n");
+                availableSeats++;
             } else {
-                printf("Não foi possível desocupar a poltrona, pois esta já se encontra desocupada.\n");
+                printf("It was not possible to vacate the seat, as it is already vacated.\n");
             }
-        } else if(opcao == 4) {
-            abrirSala(sala);
-            disponivel = 128;
+        } else if(option == 4) {
+            openRoom(room);
+            availableSeats = 128;
         } else {
             break;
         }
@@ -68,7 +68,7 @@ int main() {
     return 0;
 }
 
-void abrirSala(int p[][16]) {
+void openRoom(int p[][16]) {
     for(int i = 0; i < 8; i++) {
         for(int j = 0; j < 16; j++) {
             p[i][j] = 0;
@@ -76,7 +76,7 @@ void abrirSala(int p[][16]) {
     }
 }
 
-void exibirSala(int p[][16]) {
+void showRoom(int r[][16]) {
     for(int i = 0; i < 8; i++) {
         if(i == 0) {
             printf("A");
@@ -97,19 +97,19 @@ void exibirSala(int p[][16]) {
         }
 
         for(int j = 0; j < 16; j++) {
-            printf("  %i", p[i][j]);
+            printf("  %i", r[i][j]);
         }
 
         printf("\n");
     }
 
-    printf("\n   1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16\n");
+    printf("\n   1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16\n\n");
 }
 
-int ocuparPoltrona(char l, int c, int p[][16]) {
+int occupySeat(char r, int s, int p[][16]) {
     int i, j;
 
-    switch(l) {
+    switch(r) {
         case 'A':
             i = 0;
             break;
@@ -135,7 +135,7 @@ int ocuparPoltrona(char l, int c, int p[][16]) {
             i = 7;
     }
 
-    j = c - 1;
+    j = s - 1;
 
     if(p[i][j] == 0) {
         p[i][j] = 1;
@@ -145,10 +145,10 @@ int ocuparPoltrona(char l, int c, int p[][16]) {
     }
 }
 
-int desocuparPoltrona(char l, int c, int p[][16]) {
+int vacateSeat(char r, int s, int p[][16]) {
     int i, j;
 
-    switch(l) {
+    switch(r) {
         case 'A':
             i = 0;
             break;
@@ -174,7 +174,7 @@ int desocuparPoltrona(char l, int c, int p[][16]) {
             i = 7;
     }
 
-    j = c - 1;
+    j = s - 1;
 
     if(p[i][j] == 1) {
         p[i][j] = 0;
